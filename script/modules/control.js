@@ -20,10 +20,13 @@ export const authorization = () => {
   state.userName = prompt('Введите имя пользователя');
 
   const nameCheck = /^[a-zA-Zа-яА-ЯёЁ]+$/;
-
-  if (!state.userName || !state.userName.trim() || !nameCheck.test(state.userName)) {
+  if (!nameCheck.test(state.userName)) {
     alert('Имя пользователя должно содержать только буквы.');
     authorization();
+  }
+
+  if (!state.userName || !state.userName.trim()) {
+    return;
   } else {
     const storedTasks = getStorage(state.userName);
 
