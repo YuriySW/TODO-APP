@@ -18,8 +18,12 @@ export let state = {
 
 export const authorization = () => {
   state.userName = prompt('Введите имя пользователя');
-  if (!state.userName || !state.userName.trim()) {
-    return;
+
+  const nameCheck = /^[a-zA-Zа-яА-ЯёЁ]+$/;
+
+  if (!state.userName || !state.userName.trim() || !nameCheck.test(state.userName)) {
+    alert('Имя пользователя должно содержать только буквы.');
+    authorization();
   } else {
     const storedTasks = getStorage(state.userName);
 
