@@ -28,6 +28,7 @@ const clearAppContainer = () => {
   const h1 = document.createElement('h1');
   h1.textContent = `Todo App`;
   h1.style.cursor = 'pointer';
+  h1.title = 'Нажмите, чтобы войти';
   container.insertBefore(h1, container.firstChild);
 
   h1.addEventListener('click', () => {
