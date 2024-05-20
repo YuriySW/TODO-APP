@@ -25,7 +25,14 @@ export let state = {
 
 const clearAppContainer = () => {
   container.innerHTML = '';
-  createTitle();
+  const h1 = document.createElement('h1');
+  h1.textContent = `Todo App`;
+  h1.style.cursor = 'pointer';
+  container.insertBefore(h1, container.firstChild);
+
+  h1.addEventListener('click', () => {
+    location.reload();
+  });
 };
 
 export const authorization = () => {
@@ -40,6 +47,7 @@ export const authorization = () => {
 
   if (!state.userName || !state.userName.trim()) {
     clearAppContainer();
+
     return;
   } else {
     const storedTasks = getStorage(state.userName);
