@@ -1,4 +1,11 @@
-import {createForm, createTask, createTable, wrapperTable, createTitle} from './createElement.js';
+import {
+  createForm,
+  createTask,
+  createTable,
+  wrapperTable,
+  createTitle,
+  container,
+} from './createElement.js';
 import {renderTasks, addDeleteHandler, completeTask} from './render.js';
 import {getStorage, setStorage} from './serviceStorage.js';
 
@@ -16,16 +23,23 @@ export let state = {
   userName: '',
 };
 
+const clearAppContainer = () => {
+  container.innerHTML = '';
+  createTitle();
+};
+
 export const authorization = () => {
   state.userName = prompt('Введите имя пользователя');
 
   const nameCheck = /^[a-zA-Zа-яА-ЯёЁ]+$/;
   if (!nameCheck.test(state.userName)) {
-    alert('Имя пользователя должно содержать только буквы.');
+    alert('Имя пользователя не может быть пустым и должно содержать только буквы.');
     authorization();
+    return;
   }
 
   if (!state.userName || !state.userName.trim()) {
+    clearAppContainer();
     return;
   } else {
     const storedTasks = getStorage(state.userName);
