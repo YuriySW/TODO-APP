@@ -1,4 +1,4 @@
-import {state, table, tbody, updateTaskStatusInStorage} from './control.js';
+import {completeButton, state, table, tbody, updateTaskStatusInStorage} from './control.js';
 import {removeStorage} from './serviceStorage.js';
 
 export const renderTasks = (tasks) => {
@@ -36,6 +36,10 @@ export const renderTasks = (tasks) => {
 
     const completeBut = newRow.querySelector('.btn-success');
     completeTask(completeBut, task.id);
+
+    if (task.status === 'Выполнена') {
+      completeBut.disabled = true;
+    }
   });
 };
 
@@ -66,6 +70,7 @@ export const completeTask = (button, taskId) => {
     statusTask.textContent = 'Выполнена';
 
     updateTaskStatusInStorage(state.userName, taskId, 'Выполнена');
+    button.disabled = true;
   });
 };
 

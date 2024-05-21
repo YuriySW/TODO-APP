@@ -53,7 +53,7 @@ export const authorization = () => {
   } else {
     const storedTasks = getStorage(state.userName);
 
-    createTitle();
+    createTitle(state.userName);
     formControl();
     if (storedTasks.length > 0) {
       renderTasks(storedTasks);
@@ -74,30 +74,33 @@ export const updateTaskStatusInStorage = (userName, taskId, newStatus) => {
 
 export const formControl = () => {
   submitButton.disabled = true;
+  resetButton.disabled = true;
 
   input.addEventListener('input', () => {
     if (input.value.trim().length > 0) {
       submitButton.disabled = false;
+      resetButton.disabled = false;
     } else {
       submitButton.disabled = true;
+      resetButton.disabled = true;
     }
   });
 
   submitButton.addEventListener('click', (e) => {
     e.preventDefault();
     addTask();
+
+    resetButton.disabled = true;
   });
 
   input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       addTask();
+
+      resetButton.disabled = true;
     }
   });
-
-  const clearTasks = (userName) => {
-    localStorage.setItem(userName, JSON.stringify([]));
-  };
 
   const addTask = () => {
     state.numberTask++;
@@ -140,10 +143,8 @@ export const formControl = () => {
 
   resetButton.addEventListener('click', (e) => {
     e.preventDefault();
-    state.numberTask = 0;
-    tbody.innerHTML = '';
-    table.style.display = 'none';
-
-    clearTasks(state.userName);
+    input.value = '';
+    submitButton.disabled = true;
+    resetButton.disabled = true;
   });
 };
